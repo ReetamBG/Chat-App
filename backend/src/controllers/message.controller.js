@@ -1,6 +1,7 @@
 import cloudinary from "../configs/cloudinary.js";
 import Message from "../models/message.model.js";
 import User from "../models/user.model.js";
+import { getSocketIdFromUserId, io } from "../configs/socket.js";
 
 // fetch all users excluding logged in user (i.e themself)
 export const getUsers = async (req, res) => {
@@ -42,18 +43,24 @@ export const sendMessage = async (req, res) => {
     let imageURL;
     if (image) {
       const cloudinaryResponse = await cloudinary.uploader.upload(image);
-      imageURL = cloudinaryResponse.secure_url
+      imageURL = cloudinaryResponse.secure_url;
     }
 
     const newMessage = new Message({
       senderId: myId,
       receiverId: otherPersonId,
       text: text,
-      image: imageURL
+      image: imageURL,
     });
-    await newMessage.save()
+    await newMessage.save();
 
-    res.status(201).json({message: "Message created"})
+    const recieverSocketId = getSocketIdFromUserId(newMessage.receiverId);
+    // send to reciever socket only if online (if not in onlineUsers, recieverSocketId = undefined)
+    if (recieverSocketId) {
+      io.to(recieverSocketId).emit("newMessage", newMessage);
+    }
+
+    res.status(201).json({ message: newMessage });
   } catch (error) {
     res.status(500).json({ message: `Internal server error ${error}` });
     console.log(`Error in sendMessage controller: ${error}`);

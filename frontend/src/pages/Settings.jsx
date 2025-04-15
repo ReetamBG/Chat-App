@@ -10,7 +10,7 @@ const Settings = () => {
       {/* select theme section */}
       <div>
         <div className="mb-5">
-          <h1 className="text-2xl font-bold mb-1">Themes</h1>
+          <h1 className="text-2xl font-bold mb-1 mt-10 lg:mt-0">Themes</h1>
           <p className="text-base-content/70">Choose a theme for your chat app</p>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-x-5 gap-y-2">

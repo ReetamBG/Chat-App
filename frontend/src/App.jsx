@@ -9,6 +9,7 @@ import useAuthStore from "./stores/useAuthStore"
 import Settings from "./pages/Settings"
 import LoadingIcon from "./components/LoadingIcon"
 import useThemeStore from "./stores/useThemeStore"
+import Home from "./pages/Home"
 
 function App() {
 
@@ -29,7 +30,7 @@ function App() {
       <div data-theme={theme}>
         <Navbar />
         <Routes>
-          <Route path="/" element={"Hello"} />
+          <Route path="/" element={user ? <Home /> : <Navigate to="/signup" />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/signup" element={!user ? <Signup /> : <Navigate to="/" />} />
           <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />

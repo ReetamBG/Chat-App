@@ -4,7 +4,6 @@ import { Camera, Mail, UserRound } from 'lucide-react'
 
 const Profile = () => {
   const { user, updateProfile, isLoading } = useAuthStore()
-  console.log(user)
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0]
@@ -12,16 +11,12 @@ const Profile = () => {
 
     const reader = new FileReader()   // create the reader
     reader.readAsDataURL(file)        // convert to Base64 string
-    reader.onload = () => {
-      // fileReader.onload() does not support async so we cannot make the function reader.onload = async() => {...}
-      // so instead we define an async function inside
-      // (if we dont use async properly error handling will go to shit)
-      (async () => {
-        const base64Image = reader.result
-        await updateProfile(base64Image)
-      })()
+    reader.onload = async () => {
+      const base64Image = reader.result
+      await updateProfile(base64Image)
     }
   }
+
 
   return (
     <div className="w-full h-[calc(100vh-50px)] flex justify-center items-center">
@@ -32,7 +27,7 @@ const Profile = () => {
           <img
             src={user.profilePicture || `avatar.png`}
             alt="profilePicture"
-            className={`rounded-full size-30 object-cover ${isLoading ? "animate-pulse" : ""}`} />
+            className={`rounded-full size-30 object-cover ${isLoading && "animate-pulse"}`} />
           <button>
             <label htmlFor="upload"> {/* This will handle the upload so we can hide the browse file option  */}
               <Camera className="cursor-pointer absolute right-0 bottom-3 text-base-content/60 bg-base-content/30 rounded-full p-2" size={40} />

@@ -35,7 +35,7 @@ export const signup = async (req, res) => {
     createAccessToken({ id: newUser._id }, res);
 
     res.status(201).json({
-      user: { id: user._id, name: user.name, email, profilePicture: user.profilePicture, createdAt: user.createdAt },
+      user: { _id: user._id, name: user.name, email, profilePicture: user.profilePicture, createdAt: user.createdAt },
       message: "User created successfully",
     });
   } catch (error) {
@@ -59,7 +59,7 @@ export const login = async (req, res) => {
     createAccessToken({ id: user._id }, res);
 
     res.status(200).json({
-      user: { id: user._id, name: user.name, email, profilePicture: user.profilePicture, createdAt: user.createdAt },
+      user: { _id: user._id, name: user.name, email, profilePicture: user.profilePicture, createdAt: user.createdAt },
       message: "Login successful",
     });
   } catch (error) {

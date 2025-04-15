@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom"
 const Navbar = () => {
   const { user, logout } = useAuthStore()
   return (
-    <div className="w-full flex justify-between items-center py-2 px-10 sm:px-20 lg:px-30 shadow-md">
+    <div className="w-full flex justify-between items-center py-2 px-5 sm:px-20 lg:px-30 shadow-md">
       <NavLink to="/">
         <div className="flex gap-5 cursor-pointer items-center">
           <div className="bg-accent/20 py-1.5 px-2 rounded-lg">
