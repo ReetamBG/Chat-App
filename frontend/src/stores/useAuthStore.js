@@ -4,7 +4,7 @@ import axios from "../configs/axios";
 import { io } from "socket.io-client";
 import compressImage from "../utils/imageCompressor";
 
-const BASE_URL = import.meta.env.MODE === "production" ? "/" : "http://localhost:8000";
+const BASE_URL = import.meta.env.PROD ? "/" : "http://localhost:8000";
 
 const useAuthStore = create((set, get) => ({
   user: null,
